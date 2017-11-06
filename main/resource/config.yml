@@ -1,0 +1,36 @@
+#鐜╁琚帺瀹舵潃姝诲悗鏄惁璋冭嚦鍜屽钩妯″紡
+DeathProtect: true
+
+#鏄惁鍚敤鎴樻枟妯″紡鍦ㄤ激瀹充簨浠朵笅鐨勪綔鐢�
+#濡傛灉鍏抽棴鍒欓渶瑕佷綘鑷鍐欐彃浠跺幓闃绘浼ゅ浜嬩欢
+CancelAttack: true
+
+#鏃犳硶鏀诲嚮鐨勬彁绀猴紝鐣欑┖鍒欎笉鎻愮ず
+CancelMessage: '&4&l浣犱笉鑳芥敾鍑昏鐜╁'
+
+#鎻掍欢绂佺敤涓栫晫锛屽湪杩欎釜涓栫晫涓嬫墍鏈夊姛鑳藉け鏁�
+DisableWorld:
+- 'world_the_end'
+
+#灞佹灞佸搸鍙橀噺: %pvplib_name%
+PlaceHolder:
+  PVP_PRIVATE: '&4瀵瑰喅妯″紡'
+  PVP_PUBLIC: '&6瀵瑰喅妯″紡'
+  PROTECT: '&a鍜屽钩妯″紡'
+  
+#鎻掍欢鍛戒护鏂囨湰
+Command_help:
+- '&fPVPLib &a鍛戒护甯姪 &e(&f1.0&e)'
+- '&b/pvplib'
+- '&f鍒楀嚭鎻掍欢甯姪'
+- '&b/pvplib reload'
+- '&f閲嶈浇鎻掍欢閰嶇疆'
+- '&b/pvplib toggle'
+- '&f鍒囨崲鎴樻枟妯″紡 (鍜屽钩/瀵瑰喅)'
+- '&b/pvplib toggle <player> <mode>'
+- '&f璁剧疆鐜╁鐨勬垬鏂楁ā寮� (PROTECT, PVP_PUBLIC)'
+
+#鍒囨崲妯″紡鎻愮ず
+Command_Toggle: '&7宸插垏鎹负 %pvplib_name%'
+Command_Toggle_Admin: '&7宸插皢鐜╁ &f%player_name% &7鐨勬垬鏂楁ā寮忓垏鎹负 %pvplib_name%'
+Command_Toggle_Title: true
