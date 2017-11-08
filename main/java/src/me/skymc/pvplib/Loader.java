@@ -5,12 +5,14 @@ import org.bukkit.Bukkit;
 import me.skymc.pvplib.command.MainCommand;
 import me.skymc.pvplib.listener.LisPlayerDamage;
 import me.skymc.pvplib.listener.LisPlayerDeath;
+import me.skymc.pvplib.manager.PVPManager;
 
 public class Loader{
 	
 	public static void registerEvents() {
 		Bukkit.getPluginManager().registerEvents(new LisPlayerDamage(), PVPLib.getInst());
 		Bukkit.getPluginManager().registerEvents(new LisPlayerDeath(), PVPLib.getInst());
+		Bukkit.getPluginManager().registerEvents(new PVPManager(), PVPLib.getInst());
 	}
 	
 	public static void registerCommnad() {

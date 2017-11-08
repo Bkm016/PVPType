@@ -12,49 +12,49 @@ import me.skymc.pvplib.events.TargetRemoveEvent;
 public class PVPType {
 	
 	/**
-	 * ä¸€å¯¹ä¸€å¯¹å†³çŠ¶æ€
+	 * Ò»¶ÔÒ»¶Ô¾ö×´Ì¬
 	 * 
-	 * æ¯”å¦‚ç©å®¶ A è®¾å®š B ä¸ºå¯¹å†³ç›®æ ‡ï¼Œ
-	 * é‚£ä¹ˆ A åªèƒ½å¯¹ B é€ æˆä¼¤å®³
-	 * ä½†æ˜¯ B å´å¯ä»¥ç›´æ¥æ”»å‡» A
+	 * ±ÈÈçÍæ¼Ò A Éè¶¨ B Îª¶Ô¾öÄ¿±ê£¬
+	 * ÄÇÃ´ A Ö»ÄÜ¶Ô B Ôì³ÉÉËº¦
+	 * µ«ÊÇ B È´¿ÉÒÔÖ±½Ó¹¥»÷ A
 	 */
 	
 	// PVP_PRIVATE("PVP_PRIVATE", "", null),
 	
 	/**
-	 * å…¬å¼€å¯¹å†³çŠ¶æ€
+	 * ¹«¿ª¶Ô¾ö×´Ì¬
 	 * 
-	 * åªè¦åŒæ–¹éƒ½å¤„äº å…¬å¼€å¯¹å†³ çŠ¶æ€å‡å¯äº’ç›¸é€ æˆä¼¤å®³
+	 * Ö»ÒªË«·½¶¼´¦ÓÚ ¹«¿ª¶Ô¾ö ×´Ì¬¾ù¿É»¥ÏàÔì³ÉÉËº¦
 	 */
 	
 	// PVP_PUBLIC("PVP_PUBLIC", "", null),
 	
 	/**
-	 * ä¿æŠ¤çŠ¶æ€
+	 * ±£»¤×´Ì¬
 	 * 
-	 * æ— æ³•æ”¶åˆ°æ¥è‡ªä»»ä½•ç©å®¶çš„ä¼¤å®³
+	 * ÎŞ·¨ÊÕµ½À´×ÔÈÎºÎÍæ¼ÒµÄÉËº¦
 	 */
 	
 	// PROTECT("PROTECT", "", null);
 	
 	
 	/**
-	 * ä¸ºå¯¹å†³åˆ—è¡¨ç§»é™¤ç©å®¶
+	 * Îª¶Ô¾öÁĞ±íÒÆ³ıÍæ¼Ò
 	 * 
-	 * @param player ç©å®¶
+	 * @param player Íæ¼Ò
 	 */
 	public void removeTarget(Player player) {
 		
-		// åˆ¤æ–­æ˜¯å¦ä¸ºå¯¹å†³æ¨¡å¼
+		// ÅĞ¶ÏÊÇ·ñÎª¶Ô¾öÄ£Ê½
 		if (name.equals("PVP_PRIVATE")) {
 			
-			// åˆ¤æ–­æ˜¯å¦å­˜åœ¨
+			// ÅĞ¶ÏÊÇ·ñ´æÔÚ
 			if (getTargets().contains(player.getName())) {
 				
 				TargetRemoveEvent event = new TargetRemoveEvent(Bukkit.getPlayerExact(this.player), player);
 				Bukkit.getPluginManager().callEvent(event);
 				
-				// å¦‚æœäº‹ä»¶è¢«å–æ¶ˆ
+				// Èç¹ûÊÂ¼ş±»È¡Ïû
 				if (event.cancel()) {
 					return;
 				}
@@ -65,22 +65,22 @@ public class PVPType {
 	}
 	
 	/**
-	 * ä¸ºå¯¹å†³åˆ—è¡¨å¢åŠ ç©å®¶
+	 * Îª¶Ô¾öÁĞ±íÔö¼ÓÍæ¼Ò
 	 * 
-	 * @param player ç©å®¶
+	 * @param player Íæ¼Ò
 	 */
 	public void addTarget(Player player) {
 		
-		// åˆ¤æ–­æ˜¯å¦ä¸ºå¯¹å†³æ¨¡å¼
+		// ÅĞ¶ÏÊÇ·ñÎª¶Ô¾öÄ£Ê½
 		if (name.equals("PVP_PRIVATE")) {
 			
-			// åˆ¤æ–­æ˜¯å¦é‡å¤
+			// ÅĞ¶ÏÊÇ·ñÖØ¸´
 			if (!getTargets().contains(player.getName())) {
 				
 				TargetAddEvent event = new TargetAddEvent(Bukkit.getPlayerExact(this.player), player);
 				Bukkit.getPluginManager().callEvent(event);
 				
-				// å¦‚æœäº‹ä»¶è¢«å–æ¶ˆ
+				// Èç¹ûÊÂ¼ş±»È¡Ïû
 				if (event.cancel()) {
 					return;
 				}
@@ -91,13 +91,13 @@ public class PVPType {
 	}
 	
 	/**
-	 * è·å–å¯¹å†³åˆ—è¡¨
+	 * »ñÈ¡¶Ô¾öÁĞ±í
 	 * 
-	 * @return å¯¹å†³ç©å®¶ 
+	 * @return ¶Ô¾öÍæ¼Ò 
 	 */
 	public List<String> getTargets() {
 		
-		// å¦‚æœä¸æ˜¯å¯¹å†³æ¨¡å¼æˆ–å¯¹å†³åˆ—è¡¨ä¸ºç©º
+		// Èç¹û²»ÊÇ¶Ô¾öÄ£Ê½»ò¶Ô¾öÁĞ±íÎª¿Õ
 		if (!name.equals("PVP_PRIVATE") && value.equals("")) {
 			return new ArrayList<>();
 		}

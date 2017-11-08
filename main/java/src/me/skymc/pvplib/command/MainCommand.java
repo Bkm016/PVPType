@@ -28,38 +28,38 @@ public class MainCommand implements CommandExecutor{
 		
 		if (args[0].equals("reload") && sender.hasPermission("pvplib.admin")) {
 			Loader.loadConfig();
-			sender.sendMessage("Â§4Reload ok");
+			sender.sendMessage("¡ì4Reload ok");
 			
 			return false;
 		}
 		else if (args[0].equals("target") && sender.hasPermission("pvplib.admin")) {
 			
-			// å¦‚æœå˜é‡è¢«çœç•¥
+			// Èç¹û±äÁ¿±»Ê¡ÂÔ
 			if (args.length == 1) {
 				
 				if (sender instanceof Player) {
 					PVPType type = PVPManager.getPlayerPVPType((Player) sender);
 					
-					sender.sendMessage("Â§4Your targets: Â§7" + type.getTargets());
+					sender.sendMessage("¡ì4Your targets: ¡ì7" + type.getTargets());
 					return true;
 				}
 			}
 			else {
 				Player player = Bukkit.getPlayerExact(args[1]);
 				if (player == null) {
-					sender.sendMessage("Â§4Player Â§c" + args[1] + "Â§4 is not online");
+					sender.sendMessage("¡ì4Player ¡ìc" + args[1] + "¡ì4 is not online");
 					return false;
 				}
 				
 				PVPType type = PVPManager.getPlayerPVPType(player);
 				
-				sender.sendMessage("Â§c" + player.getName() + "Â§4's targets: Â§7" + type.getTargets());
+				sender.sendMessage("¡ìc" + player.getName() + "¡ì4's targets: ¡ì7" + type.getTargets());
 				return true;
 			}
 		}
 		else if (args[0].equals("toggle")) {
 			
-			// å¦‚æœå˜é‡è¢«çœç•¥
+			// Èç¹û±äÁ¿±»Ê¡ÂÔ
 			if (args.length == 1) {
 				
 				if (sender instanceof Player) {
@@ -76,37 +76,39 @@ public class MainCommand implements CommandExecutor{
 					return true;
 				}
 				else {
-					sender.sendMessage("Â§4This Command can not excute on CONSOLE");
+					sender.sendMessage("¡ì4This Command can not excute on CONSOLE");
 					return false;
 				}
 			}
 			else if (args.length >= 3){
 				Player player = Bukkit.getPlayerExact(args[1]);
 				if (player == null) {
-					sender.sendMessage("Â§4Player Â§c" + args[1] + "Â§4 is not online");
+					sender.sendMessage("¡ì4Player ¡ìc" + args[1] + "¡ì4 is not online");
 					return false;
 				}
 				
 				PVPManager.setPlayerPVPType(player, PVPManager.formatTypeName(args[2]), true);
 				
-				// å¯¹å†³æ¨¡å¼
+				// ¶Ô¾öÄ£Ê½
 				if (PVPManager.formatTypeName(args[2]).equals("PVP_PRIVATE") && args.length == 4) {
 					for (String sub : args[3].split("//")) {
 						Player target = Bukkit.getPlayerExact(sub);
 						if (target != null) {
 							PVPManager.getPlayerPVPType(player).addTarget(target);
-							
-							Bukkit.broadcastMessage("add target");
 						}
 					}
 				}
 				
+				// Ö¸ÁîÊ¹ÓÃÕßÊÇ·ñÊÇÍæ¼Ò
+				if (sender instanceof Player) {
+					sender.sendMessage(ColorUtils.color(PlaceholderAPI.setPlaceholders(player, PVPLib.getInst().getConfig().getString("Command_Toggle_Admin"))));
+				}
+				
 				toggleMessage(player);
-				sender.sendMessage(ColorUtils.color(PlaceholderAPI.setPlaceholders(player, PVPLib.getInst().getConfig().getString("Command_Toggle_Admin"))));
 				return true;
 			}
 			else {
-				sender.sendMessage("Â§4Error Command!");
+				sender.sendMessage("¡ì4Error Command!");
 				return false;
 			}
 		}
@@ -124,3 +126,4 @@ public class MainCommand implements CommandExecutor{
 		}
 	}
 }
+

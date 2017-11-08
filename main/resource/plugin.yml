@@ -1,13 +1,14 @@
+
 name: PVPLib
 
 description: none
 
-authors: [鍧忛粦]
+authors: [坏黑]
 website: http://www.15imc.com/index.html
 
 main: me.skymc.pvplib.PVPLib
 
-version: 1.0
+version: 1.2
 
 commands: 
   pvplib:

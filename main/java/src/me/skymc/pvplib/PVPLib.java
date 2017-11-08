@@ -9,7 +9,7 @@ import me.skymc.pvplib.type.PVPType;
 
 public class PVPLib extends JavaPlugin implements Listener
 {
-	private static final String prefix = "Â§cÂ§l[Â§4Â§lSkyMcraftÂ§cÂ§l] Â§7";
+	private static final String prefix = "¡ìc¡ìl[¡ì4¡ìlSkyMcraft¡ìc¡ìl] ¡ì7";
 	private static Plugin plugin = null;
 	
 	public static Plugin getInst() {

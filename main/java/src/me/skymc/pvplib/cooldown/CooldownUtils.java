@@ -21,20 +21,20 @@ public class CooldownUtils implements Listener {
 
 	public static void register(CooldownPack pack) {
 		packlist.put(pack.getPackName(), pack);
-		PVPLib.getInst().getLogger().info("æ³¨å†Œå†·å´åŒ…: " + pack.getPackName() + ", æ—¶é—´: " + pack.getPackSeconds() + " ç§’ (åŒ¿åæ³¨å†Œ)");
+		PVPLib.getInst().getLogger().info("×¢²áÀäÈ´°ü: " + pack.getPackName() + ", Ê±¼ä: " + pack.getPackSeconds() + " Ãë (ÄäÃû×¢²á)");
 	}
 	
 	public static void register(CooldownPack pack, Plugin plugin) {
 		pack.setPlugin(plugin.getName());
 		
 		packlist.put(pack.getPackName(), pack);
-		PVPLib.getInst().getLogger().info("æ³¨å†Œå†·å´åŒ…: " + pack.getPackName() + ", æ—¶é—´: " + pack.getPackSeconds() + " ç§’ (" + plugin.getName() + ")");
+		PVPLib.getInst().getLogger().info("×¢²áÀäÈ´°ü: " + pack.getPackName() + ", Ê±¼ä: " + pack.getPackSeconds() + " Ãë (" + plugin.getName() + ")");
 	}
 	
 	public static void unregister(String name) {
 		packlist.remove(name);
 		
-		PVPLib.getInst().getLogger().info("æ³¨é”€å†·å´åŒ…: " + name + " (ä¸»åŠ¨æ³¨é”€)");
+		PVPLib.getInst().getLogger().info("×¢ÏúÀäÈ´°ü: " + name + " (Ö÷¶¯×¢Ïú)");
 	}
 	
 	@EventHandler
@@ -52,7 +52,7 @@ public class CooldownUtils implements Listener {
 			if (pack.getPlugin().equals(e.getPlugin().getName())) {
 				packlist.remove(pack.getPackName());
 				
-				PVPLib.getInst().getLogger().info("æ³¨é”€å†·å´åŒ…: " + pack.getPackName() + " (è‡ªåŠ¨æ³¨é”€)");
+				PVPLib.getInst().getLogger().info("×¢ÏúÀäÈ´°ü: " + pack.getPackName() + " (×Ô¶¯×¢Ïú)");
 			}
 		}
 	}

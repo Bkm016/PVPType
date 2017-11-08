@@ -8,7 +8,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import me.skymc.pvplib.PVPLib;
+import me.skymc.pvplib.command.MainCommand;
 import me.skymc.pvplib.events.PVPTypeChanceEvent;
 import me.skymc.pvplib.events.TargetLoseEvent;
 import me.skymc.pvplib.type.PVPType;
@@ -20,26 +23,40 @@ public class PVPManager implements Listener {
 	@EventHandler
 	public void join(PlayerJoinEvent e) {
 		data.put(e.getPlayer().getName(), getDefaultType(e.getPlayer()));
+		
+		if (PVPLib.getInst().getConfig().getInt("JoinPVPLater") != 0) {
+			
+			new BukkitRunnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					
+					setPlayerPVPType(e.getPlayer(), "PVP_PUBLIC", true);
+					MainCommand.toggleMessage(e.getPlayer());
+				}
+			}.runTaskLater(PVPLib.getInst(), PVPLib.getInst().getConfig().getInt("JoinPVPLater") * 20);
+		}
 	}
 	
 	@EventHandler
 	public void quit(PlayerQuitEvent e) {
 		
-		// ä»æ•°æ®åº“ä¸­ç§»é™¤è¯¥ç©å®¶çš„æˆ˜æ–—æ¨¡å¼
+		// ´ÓÊı¾İ¿âÖĞÒÆ³ı¸ÃÍæ¼ÒµÄÕ½¶·Ä£Ê½
 		data.remove(e.getPlayer().getName());
 		
 		for (PVPType type : data.values()) {
 			
-			// åˆ¤æ–­å½“å‰æœåŠ¡å™¨æ˜¯å¦æœ‰äººä»¥è¯¥ç©å®¶ä¸ºå¯¹å†³ç›®æ ‡
+			// ÅĞ¶Ïµ±Ç°·şÎñÆ÷ÊÇ·ñÓĞÈËÒÔ¸ÃÍæ¼ÒÎª¶Ô¾öÄ¿±ê
 			if (type.getValue().contains(e.getPlayer().getName())) {
 				
-				// è§¦å‘ç›‘å¬å™¨
+				// ´¥·¢¼àÌıÆ÷
 				TargetLoseEvent event = new TargetLoseEvent(Bukkit.getPlayerExact(type.getPlayer()), e.getPlayer());
 				Bukkit.getPluginManager().callEvent(event);
 				
 				if (event.remove()) {
 					
-					// ä»ç›®æ ‡ä¸­ç§»é™¤è¯¥ç©å®¶
+					// ´ÓÄ¿±êÖĞÒÆ³ı¸ÃÍæ¼Ò
 					type.removeTarget(e.getPlayer());
 				}
 			}
@@ -47,7 +64,7 @@ public class PVPManager implements Listener {
 	}
 	
 	/**
-	 * æ ¼å¼åŒ–æˆ˜æ–—æ¨¡å¼åç§°ï¼Œé”™è¯¯çš„åç§°å°†ä¼šè¢«æ”¹ä¸ºå’Œå¹³æ¨¡å¼ï¼ˆPROTECTï¼‰
+	 * ¸ñÊ½»¯Õ½¶·Ä£Ê½Ãû³Æ£¬´íÎóµÄÃû³Æ½«»á±»¸ÄÎªºÍÆ½Ä£Ê½£¨PROTECT£©
 	 * 
 	 * @param name
 	 * @return
@@ -63,7 +80,7 @@ public class PVPManager implements Listener {
 	}
 	
 	/**
-	 * è·å–ç©å®¶çš„æˆ˜æ–—æ¨¡å¼ï¼Œå¦‚æœæ²¡æœ‰æ•°æ®åˆ™è¿”å›é»˜è®¤æˆ˜æ–—æ¨¡å¼
+	 * »ñÈ¡Íæ¼ÒµÄÕ½¶·Ä£Ê½£¬Èç¹ûÃ»ÓĞÊı¾İÔò·µ»ØÄ¬ÈÏÕ½¶·Ä£Ê½
 	 * 
 	 * @param player
 	 * @return
@@ -72,32 +89,32 @@ public class PVPManager implements Listener {
 		if (data.containsKey(player.getName())) {
 			return data.get(player.getName());
 		}
-		// è¿”å›é»˜è®¤æ¨¡å¼
+		// ·µ»ØÄ¬ÈÏÄ£Ê½
 		return getDefaultType(player);
 	}
 	
 	/**
-	 * è®¾ç½®ç©å®¶çš„æˆ˜æ–—æ¨¡å¼ï¼ˆç®€æ˜“ç‰ˆï¼‰
+	 * ÉèÖÃÍæ¼ÒµÄÕ½¶·Ä£Ê½£¨¼òÒ×°æ£©
 	 * 
-	 * @param player ç©å®¶
-	 * @param name æ¨¡å¼
-	 * @param clearTarget æ˜¯å¦æ¸…ç†å¯¹å†³ç›®æ ‡
+	 * @param player Íæ¼Ò
+	 * @param name Ä£Ê½
+	 * @param clearTarget ÊÇ·ñÇåÀí¶Ô¾öÄ¿±ê
 	 */
 	public static void setPlayerPVPType(Player player, String name, boolean clearTarget) {
 		PVPType type = getPlayerPVPType(player);
 		
-		// æ ¼å¼åŒ–åç§°
+		// ¸ñÊ½»¯Ãû³Æ
 		name = formatTypeName(name);
 		
-		// è§¦å‘ç›‘å¬å™¨
+		// ´¥·¢¼àÌıÆ÷
 		PVPTypeChanceEvent event = new PVPTypeChanceEvent(player, name, type.getName());
 		Bukkit.getPluginManager().callEvent(event);
 		
-		// å¦‚æœäº‹ä»¶æ²¡æœ‰è¢«å–æ¶ˆ
+		// Èç¹ûÊÂ¼şÃ»ÓĞ±»È¡Ïû
 		if (!event.cancel()) {
 			type.setName(name);
 			
-			// æ˜¯å¦æ¸…ç†å¯¹å†³ç›®æ ‡
+			// ÊÇ·ñÇåÀí¶Ô¾öÄ¿±ê
 			if (clearTarget) {
 				type.setValue("");
 			}
@@ -106,7 +123,7 @@ public class PVPManager implements Listener {
 	}
 	
 	/**
-	 * è·å–é»˜è®¤æˆ˜æ–—æ¨¡å¼ï¼ˆå’Œå¹³æ¨¡å¼ï¼‰
+	 * »ñÈ¡Ä¬ÈÏÕ½¶·Ä£Ê½£¨ºÍÆ½Ä£Ê½£©
 	 * 
 	 * @param player
 	 * @return
@@ -116,51 +133,51 @@ public class PVPManager implements Listener {
 	}
 	
 	/**
-	 * é‡æ–°è½½å…¥å…¨æœæ‰€æœ‰ç©å®¶çš„æˆ˜æ–—æ¨¡å¼ï¼Œå¹¶è®¾ç½®ä¸ºå’Œå¹³æ¨¡å¼
+	 * ÖØĞÂÔØÈëÈ«·şËùÓĞÍæ¼ÒµÄÕ½¶·Ä£Ê½£¬²¢ÉèÖÃÎªºÍÆ½Ä£Ê½
 	 * 
 	 */
 	public static void reloadPVPType() {
 		data.clear();
 		
-		// é‡æ–°è½½å…¥æ‰€æœ‰ç©å®¶çš„ PVP çŠ¶æ€
+		// ÖØĞÂÔØÈëËùÓĞÍæ¼ÒµÄ PVP ×´Ì¬
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			data.put(player.getName(), getDefaultType(player));
 		}
 	}
 	
 	/**
-	 * ç©å®¶ A æ˜¯å¦å¯ä»¥æ”»å‡» ç©å®¶ B
+	 * Íæ¼Ò A ÊÇ·ñ¿ÉÒÔ¹¥»÷ Íæ¼Ò B
 	 * 
 	 * @param playerA
 	 * @param playerB
-	 * @return æ˜¯/å¦
+	 * @return ÊÇ/·ñ
 	 */
 	public static boolean canDamage(Player playerA, Player playerB) {
 		
 		PVPType typeA = getPlayerPVPType(playerA);
 		PVPType typeB = getPlayerPVPType(playerB);
 		
-		// åˆ¤æ–­ç©å®¶ A æ˜¯å¦å¤„äºå¯¹å†³æ¨¡å¼
+		// ÅĞ¶ÏÍæ¼Ò A ÊÇ·ñ´¦ÓÚ¶Ô¾öÄ£Ê½
 		if (typeA.getName().equals("PVP_PRIVATE")) {
 			
-			// ç©å®¶ B æ˜¯å¦ä¸ºç©å®¶ A çš„å¯¹å†³ç›®æ ‡
+			// Íæ¼Ò B ÊÇ·ñÎªÍæ¼Ò A µÄ¶Ô¾öÄ¿±ê
 			if (typeA.getValue().contains(playerB.getName())) {
 				return true;
 			}
 			return false;
 		}
 		
-		// åˆ¤æ–­ç©å®¶ B æ˜¯å¦å¤„äºå¯¹å†³æ¨¡å¼
+		// ÅĞ¶ÏÍæ¼Ò B ÊÇ·ñ´¦ÓÚ¶Ô¾öÄ£Ê½
 		if (typeB.getName().equals("PVP_PRIVATE")) {
 					
-			// ç©å®¶ A æ˜¯å¦ä¸ºç©å®¶ B çš„å¯¹å†³ç›®æ ‡
+			// Íæ¼Ò A ÊÇ·ñÎªÍæ¼Ò B µÄ¶Ô¾öÄ¿±ê
 			if (typeB.getValue().contains(playerA.getName())) {
 				return true;
 			}
 			return false;
 		}
 		
-		// æ˜¯å¦åŒæ–¹éƒ½å¤„äºå…¬å¼€çŠ¶æ€
+		// ÊÇ·ñË«·½¶¼´¦ÓÚ¹«¿ª×´Ì¬
 		if (typeA.getName().equals("PVP_PUBLIC") && typeB.getName().equals("PVP_PUBLIC")) {
 			return true;
 		}

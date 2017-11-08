@@ -21,7 +21,7 @@ public class LisPlayerDamage implements Listener {
 			return;
 		}
 		
-		// 鍙椾激鑰呮槸鐜╁
+		// 受伤者是玩家
 		if (e.getEntity() instanceof Player) {
 			Player attacker = null;
 			
@@ -36,10 +36,10 @@ public class LisPlayerDamage implements Listener {
 				}
 			}
 			
-			// 鏀诲嚮鑰呮椂鐜╁
+			// 攻击者时玩家
 			if (attacker != null) {
 				
-				// 鏄惁鍙互鏀诲嚮
+				// 是否可以攻击
 				if (!PVPManager.canDamage(attacker, (Player) e.getEntity())) {
 					e.setCancelled(true);
 					

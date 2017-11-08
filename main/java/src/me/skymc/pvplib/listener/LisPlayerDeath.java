@@ -21,7 +21,7 @@ public class LisPlayerDeath implements Listener {
 			return;
 		}
 		
-		// æ­»äº¡è€… æ˜¯å¦æ˜¯ å‡»æ€è€… çš„å¯¹å†³ç›®æ ‡
+		// ËÀÍöÕß ÊÇ·ñÊÇ »÷É±Õß µÄ¶Ô¾öÄ¿±ê
 		if (PVPManager.getPlayerPVPType(e.getEntity().getKiller()).getValue().contains(e.getEntity().getName())) {
 			TargetKilledEvent event = new TargetKilledEvent(e.getEntity().getKiller(), e.getEntity());
 			Bukkit.getPluginManager().callEvent(event);
@@ -31,7 +31,7 @@ public class LisPlayerDeath implements Listener {
 			}
 		}
 		
-		// è¢«ç©å®¶æ€æ­»åæ˜¯å¦è°ƒè‡³å’Œå¹³æ¨¡å¼
+		// ±»Íæ¼ÒÉ±ËÀºóÊÇ·ñµ÷ÖÁºÍÆ½Ä£Ê½
 		if (PVPLib.getInst().getConfig().getBoolean("DeathProtect")) {
 			PVPManager.setPlayerPVPType(e.getEntity(), "PROTECT", true);
 			
